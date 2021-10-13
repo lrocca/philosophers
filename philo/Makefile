@@ -6,7 +6,7 @@
 #    By: lrocca <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/01 17:52:32 by lrocca            #+#    #+#              #
-#    Updated: 2021/10/01 19:44:32 by lrocca           ###   ########.fr        #
+#    Updated: 2021/10/13 19:35:21 by lrocca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,15 @@ NAME	=	philo
 
 # compilation options
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -pthread
 IFLAGS	=	-I$(INCDIR)
 MKDIR	=	mkdir -p
 
-FILES	=	main.c
+FILES	=	main.c \
+			thread.c \
+			utils/ft_get_time.c \
+			utils/ft_log.c \
+			utils/ft_atoi.c
 
 SRCDIR	=	./src
 OBJDIR	=	./obj
