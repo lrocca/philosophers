@@ -50,7 +50,6 @@ typedef struct s_thread
 	pthread_mutex_t	fork;
 }	t_thread;
 
-
 void	*ft_thread(void *philo);
 
 /* utils */

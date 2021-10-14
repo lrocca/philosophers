@@ -6,11 +6,17 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 17:19:21 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/13 15:55:17 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/14 16:35:37 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static char	ft_isspace(char c)
+{
+	return (c == '\t' || c == '\n' || c == '\v' || \
+			c == '\f' || c == '\r' || c == ' ');
+}
 
 int	ft_atoi(const char *str)
 {
@@ -19,7 +25,7 @@ int	ft_atoi(const char *str)
 
 	n = 0;
 	sign = 1;
-	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
+	while (ft_isspace(*str))
 		str++;
 	while (*str == '+' || *str == '-')
 	{
@@ -27,15 +33,15 @@ int	ft_atoi(const char *str)
 			sign *= -1;
 		str++;
 	}
-	if (!(*str >= '0' && *str <= '9') || sign < 0)
-	{
-		printf("error: one or more arguments are not a positive number\n");
-		exit(EXIT_FAILURE);
-	}
 	while (*str >= '0' && *str <= '9')
 	{
 		n = n * 10 + *str - '0';
 		str++;
+	}
+	if (n == 0 || sign < 0)
+	{
+		ft_error("one or more arguments are not a positive number");
+		exit(EXIT_FAILURE);
 	}
 	return (sign * n);
 }
