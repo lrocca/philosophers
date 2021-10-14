@@ -55,6 +55,7 @@ void	*ft_thread(void *philo);
 
 /* utils */
 int		ft_atoi(const char *str);
+char	ft_error(const char *msg);
 long	ft_get_time(void);
 void	ft_log(t_philo *philo, char *message);
 
