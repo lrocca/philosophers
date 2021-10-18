@@ -57,5 +57,6 @@ int		ft_atoi(const char *str);
 char	ft_error(const char *msg);
 long	ft_get_time(void);
 void	ft_log(t_philo *philo, char *message);
+void	ft_usleep(unsigned int interval);
 
 #endif
