@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:32 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/18 20:23:06 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/19 19:04:50 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_philo
 typedef struct s_thread
 {
 	t_philo			data;
-	// pthread_t		tid;
 	pthread_mutex_t	fork;
 }	t_thread;
 

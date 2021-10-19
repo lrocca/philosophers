@@ -6,17 +6,14 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:09 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/18 20:30:59 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/19 18:21:34 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static char	print_usage(void)
-{
-	return (printf("usage: ./philo number_of_philosophers time_to_die \
-time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"));
-}
+#define MSG_USAGE "usage: ./philo number_of_philosophers time_to_die \
+time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 
 static char	init(t_common *common, t_thread **threads, char **av)
 {
@@ -49,15 +46,13 @@ static char	init(t_common *common, t_thread **threads, char **av)
 
 static void	*check_meals(void *ptr)
 {
-	t_common *common;
+	t_common	*common;
 
 	common = ptr;
 	while (1)
 		if (common->vtotal != common->meals)
 			break ;
-	pthread_mutex_lock(&common->write);
 	printf("All philosophers have finished their meals.\n");
-	pthread_mutex_unlock(&common->write);
 	pthread_mutex_unlock(&common->exit);
 	return (NULL);
 }
@@ -102,7 +97,7 @@ static char	clean(t_common *common, t_thread *threads)
 	pthread_mutex_destroy(&common->write);
 	pthread_mutex_destroy(&common->total);
 	free(threads);
-	return (-1);
+	return (EXIT_FAILURE);
 }
 
 int	main(int ac, char **av)
@@ -112,10 +107,9 @@ int	main(int ac, char **av)
 
 	threads = NULL;
 	if (ac != 5 && ac != 6)
-		return (ft_error("bad arguments") && print_usage());
+		return (ft_error("bad arguments") && printf(MSG_USAGE));
 	if (init(&common, &threads, av) || start(&common, threads))
 		return (clean(&common, threads));
 	pthread_mutex_lock(&common.exit);
-	pthread_mutex_lock(&common.write);
 	clean(&common, threads);
 }
