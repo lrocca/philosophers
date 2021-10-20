@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:46:56 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:47:25 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:58:48 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void	*check_life(void *ptr)
 	t_philo	*philo;
 
 	philo = ptr;
-	while (!philo->finish)
+	while (philo->common->meals == INFINITE_MEALS \
+		|| philo->meals < philo->common->meals)
 	{
-		if (ft_get_time() - philo->last_meal > philo->common->die \
-			&& !philo->finish)
+		if (ft_get_time() - philo->last_meal > philo->common->die)
 		{
 			ft_log(philo, MSG_DIE);
 			pthread_mutex_lock(&philo->common->write);
@@ -81,19 +81,15 @@ void	*ft_thread(void *ptr)
 		return (NULL);
 	if (!(philo->who % 2))
 		ft_usleep((float)philo->common->eat * 0.1 + 1);
-	while (philo->common->meals == INFINITE_MEALS \
-		|| philo->common->meals > philo->meals)
+	while (1)
 	{
 		eat(philo);
 		if (philo->common->meals == philo->meals)
-		{
-			philo->finish = 1;
-			pthread_mutex_lock(&philo->common->total);
-			philo->common->vtotal++;
-			pthread_mutex_unlock(&philo->common->total);
 			break ;
-		}
 		sleep_think(philo);
 	}
+	pthread_mutex_lock(&philo->common->total_m);
+	philo->common->total_v++;
+	pthread_mutex_unlock(&philo->common->total_m);
 	return (NULL);
 }

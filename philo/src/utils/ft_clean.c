@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 13:55:50 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:56:06 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 18:06:23 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	ft_clean(t_common *common, t_thread *threads)
 		pthread_mutex_destroy(&threads[i++].fork);
 	pthread_mutex_destroy(&common->exit);
 	pthread_mutex_destroy(&common->write);
-	pthread_mutex_destroy(&common->total);
+	pthread_mutex_destroy(&common->total_m);
 	free(threads);
 	return (EXIT_FAILURE);
 }

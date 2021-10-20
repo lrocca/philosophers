@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:32 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:56:13 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:58:34 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef struct s_common
 {
 	pthread_mutex_t	exit;
 	pthread_mutex_t	write;
-	pthread_mutex_t	total;
+	pthread_mutex_t	total_m;
 	long			epoch;
 	int				philos;
 	int				die;
 	int				eat;
 	int				sleep;
 	int				meals;
-	int				vtotal;
+	int				total_v;
 }	t_common;
 
 typedef struct s_philo
@@ -49,7 +49,6 @@ typedef struct s_philo
 	long			last_meal;
 	int				who;
 	int				meals;
-	char			finish;
 }	t_philo;
 
 typedef struct s_thread

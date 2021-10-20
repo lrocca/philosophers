@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:09 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:56:57 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:59:31 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ static char	init(t_common *common, t_thread **threads)
 	if (!*threads)
 		return (ft_error("threads[] allocation failed"));
 	i = 0;
-	common->vtotal = 0;
+	common->total_v = 0;
 	common->epoch = ft_get_time();
 	while (i < common->philos)
 	{
 		(*threads)[i].data.who = i + 1;
-		(*threads)[i].data.finish = 0;
 		(*threads)[i].data.common = common;
 		(*threads)[i].data.last_meal = common->epoch;
 		if (pthread_mutex_init(&(*threads)[i].fork, NULL))
@@ -58,10 +57,8 @@ static void	*check_meals(void *ptr)
 	t_common	*common;
 
 	common = ptr;
-	while (1)
-		if (common->vtotal == common->philos)
-			break ;
-	ft_usleep(200);
+	while (common->total_v != common->philos)
+		;
 	pthread_mutex_lock(&common->write);
 	printf("All philosophers have finished their meals.\n");
 	pthread_mutex_unlock(&common->exit);
@@ -77,7 +74,7 @@ static char	start(t_common *common, t_thread *threads)
 	tid = 0;
 	if (pthread_mutex_init(&common->exit, NULL) || \
 		pthread_mutex_init(&common->write, NULL) || \
-		pthread_mutex_init(&common->total, NULL))
+		pthread_mutex_init(&common->total_m, NULL))
 		return (ft_error("pthread_mutex_init failed"));
 	pthread_mutex_lock(&common->exit);
 	if (common->meals != INFINITE_MEALS && \
@@ -102,11 +99,11 @@ int	main(int ac, char **av)
 	t_common	common;
 	t_thread	*threads;
 
-	threads = NULL;
 	if (ac != 5 && ac != 6)
 		return (-ft_error("bad arguments\n"MSG_USAGE));
 	if (parse(&common, av))
 		return (1);
+	threads = NULL;
 	if (init(&common, &threads) || start(&common, threads))
 		return (ft_clean(&common, threads));
 	pthread_mutex_lock(&common.exit);
