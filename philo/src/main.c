@@ -6,31 +6,40 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:09 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/19 18:21:34 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 13:56:57 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 #define MSG_USAGE "usage: ./philo number_of_philosophers time_to_die \
-time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
+time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
-static char	init(t_common *common, t_thread **threads, char **av)
+static char	parse(t_common *common, char **av)
 {
-	int	i;
-
 	common->philos = ft_atoi(av[1]);
 	common->die = ft_atoi(av[2]);
 	common->eat = ft_atoi(av[3]);
 	common->sleep = ft_atoi(av[4]);
-	common->meals = -1;
 	if (av[5])
 		common->meals = ft_atoi(av[5]);
+	else
+		common->meals = INFINITE_MEALS;
+	return (common->philos <= 0 || common->die <= 0 \
+		|| common->eat <= 0 || common->sleep <= 0 \
+		|| (av[5] && common->meals <= 0));
+}
+
+static char	init(t_common *common, t_thread **threads)
+{
+	int	i;
+
 	*threads = malloc(sizeof(t_thread) * common->philos);
 	if (!*threads)
 		return (ft_error("threads[] allocation failed"));
-	common->epoch = ft_get_time();
 	i = 0;
+	common->vtotal = 0;
+	common->epoch = ft_get_time();
 	while (i < common->philos)
 	{
 		(*threads)[i].data.who = i + 1;
@@ -50,8 +59,10 @@ static void	*check_meals(void *ptr)
 
 	common = ptr;
 	while (1)
-		if (common->vtotal != common->meals)
+		if (common->vtotal == common->philos)
 			break ;
+	ft_usleep(200);
+	pthread_mutex_lock(&common->write);
 	printf("All philosophers have finished their meals.\n");
 	pthread_mutex_unlock(&common->exit);
 	return (NULL);
@@ -69,8 +80,8 @@ static char	start(t_common *common, t_thread *threads)
 		pthread_mutex_init(&common->total, NULL))
 		return (ft_error("pthread_mutex_init failed"));
 	pthread_mutex_lock(&common->exit);
-	if (common->meals != -1 && \
-		(pthread_create(&tid, NULL, check_meals, &common) \
+	if (common->meals != INFINITE_MEALS && \
+		(pthread_create(&tid, NULL, check_meals, common) \
 		|| pthread_detach(tid)))
 		return (ft_error("check_meals failed to start"));
 	while (i < common->philos)
@@ -86,20 +97,6 @@ static char	start(t_common *common, t_thread *threads)
 	return (0);
 }
 
-static char	clean(t_common *common, t_thread *threads)
-{
-	int	i;
-
-	i = 0;
-	while (threads && i < common->philos)
-		pthread_mutex_destroy(&threads[i++].fork);
-	pthread_mutex_destroy(&common->exit);
-	pthread_mutex_destroy(&common->write);
-	pthread_mutex_destroy(&common->total);
-	free(threads);
-	return (EXIT_FAILURE);
-}
-
 int	main(int ac, char **av)
 {
 	t_common	common;
@@ -107,9 +104,11 @@ int	main(int ac, char **av)
 
 	threads = NULL;
 	if (ac != 5 && ac != 6)
-		return (ft_error("bad arguments") && printf(MSG_USAGE));
-	if (init(&common, &threads, av) || start(&common, threads))
-		return (clean(&common, threads));
+		return (-ft_error("bad arguments\n"MSG_USAGE));
+	if (parse(&common, av))
+		return (1);
+	if (init(&common, &threads) || start(&common, threads))
+		return (ft_clean(&common, threads));
 	pthread_mutex_lock(&common.exit);
-	clean(&common, threads);
+	ft_clean(&common, threads);
 }

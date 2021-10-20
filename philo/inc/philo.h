@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:32 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/19 19:04:50 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 13:56:13 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define MSG_EAT	"is eating"
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
+
+# define INFINITE_MEALS	-2
 
 typedef struct s_common
 {
@@ -60,6 +62,7 @@ void	*ft_thread(void *philo);
 
 /* utils */
 int		ft_atoi(const char *str);
+char	ft_clean(t_common *common, t_thread *threads);
 char	ft_error(const char *msg);
 long	ft_get_time(void);
 void	ft_log(t_philo *philo, char *message);

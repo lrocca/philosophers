@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:46:56 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/19 19:08:45 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 13:47:25 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	*ft_thread(void *ptr)
 		return (NULL);
 	if (!(philo->who % 2))
 		ft_usleep((float)philo->common->eat * 0.1 + 1);
-	while (philo->common->meals == -1 || philo->common->meals > philo->meals)
+	while (philo->common->meals == INFINITE_MEALS \
+		|| philo->common->meals > philo->meals)
 	{
 		eat(philo);
 		if (philo->common->meals == philo->meals)
@@ -90,6 +91,7 @@ void	*ft_thread(void *ptr)
 			pthread_mutex_lock(&philo->common->total);
 			philo->common->vtotal++;
 			pthread_mutex_unlock(&philo->common->total);
+			break ;
 		}
 		sleep_think(philo);
 	}

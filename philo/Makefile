@@ -6,7 +6,7 @@
 #    By: lrocca <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/01 17:52:32 by lrocca            #+#    #+#              #
-#    Updated: 2021/10/18 18:23:07 by lrocca           ###   ########.fr        #
+#    Updated: 2021/10/20 13:56:40 by lrocca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ MKDIR	=	mkdir -p
 FILES	=	main.c \
 			thread.c \
 			utils/ft_atoi.c \
+			utils/ft_clean.c \
 			utils/ft_error.c \
 			utils/ft_get_time.c \
 			utils/ft_log.c \

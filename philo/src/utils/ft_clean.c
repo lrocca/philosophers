@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/14 15:22:28 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:21:53 by lrocca           ###   ########.fr       */
+/*   Created: 2021/10/20 13:55:50 by lrocca            #+#    #+#             */
+/*   Updated: 2021/10/20 13:56:06 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	ft_strlen(const char *s)
+char	ft_clean(t_common *common, t_thread *threads)
 {
-	size_t	len;
+	int	i;
 
-	len = 0;
-	while (s && s[len])
-		len++;
-	return (len);
-}
-
-char	ft_error(const char *msg)
-{
-	write(2, "error: ", 8);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	return (-1);
+	i = 0;
+	while (threads && i < common->philos)
+		pthread_mutex_destroy(&threads[i++].fork);
+	pthread_mutex_destroy(&common->exit);
+	pthread_mutex_destroy(&common->write);
+	pthread_mutex_destroy(&common->total);
+	free(threads);
+	return (EXIT_FAILURE);
 }

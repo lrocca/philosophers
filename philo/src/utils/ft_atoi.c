@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 17:19:21 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/14 16:35:37 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/20 13:08:37 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	if (n == 0 || sign < 0)
-	{
-		ft_error("one or more arguments are not a positive number");
-		exit(EXIT_FAILURE);
-	}
+		return (ft_error("one or more arguments are not a positive number"));
 	return (sign * n);
 }
