@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:09 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 17:59:31 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/21 18:50:27 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	init(t_common *common, t_thread **threads)
 	while (i < common->philos)
 	{
 		(*threads)[i].data.who = i + 1;
+		(*threads)[i].data.meals = 0;
 		(*threads)[i].data.common = common;
 		(*threads)[i].data.last_meal = common->epoch;
 		if (pthread_mutex_init(&(*threads)[i].fork, NULL))

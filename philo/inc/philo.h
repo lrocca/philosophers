@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:40:32 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 17:58:34 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/21 18:49:55 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define MSG_SLEEP	"is sleeping"
 # define MSG_THINK	"is thinking"
 
-# define INFINITE_MEALS	-2
+# define INFINITE_MEALS	-1
 
 typedef struct s_common
 {
