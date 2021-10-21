@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 15:22:28 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 13:21:53 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:10:24 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ char	ft_error(const char *msg)
 	write(2, "error: ", 8);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	return (-1);
+	return (1);
 }

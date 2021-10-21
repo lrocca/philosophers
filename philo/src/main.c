@@ -101,7 +101,7 @@ int	main(int ac, char **av)
 	t_thread	*threads;
 
 	if (ac != 5 && ac != 6)
-		return (-ft_error("bad arguments\n"MSG_USAGE));
+		return (ft_error("bad arguments\n"MSG_USAGE));
 	if (parse(&common, av))
 		return (1);
 	threads = NULL;
