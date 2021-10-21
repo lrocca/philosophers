@@ -6,7 +6,7 @@
 /*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 16:46:56 by lrocca            #+#    #+#             */
-/*   Updated: 2021/10/20 17:58:48 by lrocca           ###   ########.fr       */
+/*   Updated: 2021/10/21 18:51:21 by lrocca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	eat(t_philo *philo)
 	ft_log(philo, MSG_FORK);
 	pthread_mutex_lock(philo->lfork);
 	ft_log(philo, MSG_EAT);
-	ft_usleep(philo->common->eat);
 	philo->last_meal = ft_get_time();
+	ft_usleep(philo->common->eat);
 	philo->meals++;
 	pthread_mutex_unlock(philo->rfork);
 	pthread_mutex_unlock(philo->lfork);
