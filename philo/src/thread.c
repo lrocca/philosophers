@@ -17,9 +17,10 @@ static void	*check_life(void *ptr)
 	t_philo	*philo;
 
 	philo = ptr;
-	while (philo->common->meals == INFINITE_MEALS \
-		|| philo->meals < philo->common->meals)
+	while (1)
 	{
+		if (philo->meals == philo->common->meals)
+			break ;
 		if (ft_get_time() - philo->last_meal > philo->common->die)
 		{
 			ft_log(philo, MSG_DIE);
@@ -79,7 +80,7 @@ void	*ft_thread(void *ptr)
 	philo = ptr;
 	if (life_daemon(philo))
 		return (NULL);
-	if (!(philo->who % 2))
+	if (philo->who % 2 == 0)
 		ft_usleep((float)philo->common->eat * 0.1 + 1);
 	while (1)
 	{
